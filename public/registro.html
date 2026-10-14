@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro</title>
+  </head>
+  <body>
+    <form id="formRegistro">
+      <input type="email" id="email" placeholder="Email" required />
+      <input
+        type="password"
+        id="senha"
+        placeholder="Senha"
+        minlength="8"
+        required
+      />
+      <button type="submit">Registrar</button>
+    </form>
+
+    <p id="mensagem"></p>
+
+    <script>
+      document
+        .getElementById("formRegistro")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const senha = document.getElementById("senha").value;
+
+          try {
+            const resposta = await fetch("/api/registro", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, senha }),
+            });
+
+            const dados = await resposta.json();
+
+            if (resposta.ok) {
+              window.location.href = "/";
+            } else {
+              document.getElementById("mensagem").textContent = dados.erro;
+            }
+          } catch {
+            document.getElementById("mensagem").textContent =
+              "Erro ao conectar com o servidor";
+          }
+        });
+    </script>
+  </body>
+</html>

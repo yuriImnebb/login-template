@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <h1>Bem-vindo à dashboard!</h1>
+    <button id="sair">Sair</button>
+
+    <script>
+      document.getElementById("sair").onclick = async () => {
+        const resposta = await fetch("/api/logout", {
+          method: "POST",
+        });
+
+        if (resposta.ok) {
+          window.location.href = "/";
+        }
+      };
+    </script>
+  </body>
+</html>
